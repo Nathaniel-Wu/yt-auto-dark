@@ -23,7 +23,7 @@
 // @description  Automatically Toggle Dark Mode
 // @author       Victor VOISIN, Nathaniel Wu
 // @include      *www.youtube.com/*
-// @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
+// @license      GPL-3.0-or-later
 // @grant        none
 // ==/UserScript==
 
