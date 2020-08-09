@@ -20,7 +20,7 @@
 // @name         YouTube Auto Dark Mode
 // @namespace    http://tampermonkey.net/
 // @version      3.0.1
-// @description  Automatically Toggle Dark Mode
+// @description  Automatically toggle built-in dark mode on youtube.com
 // @author       Victor VOISIN, Nathaniel Wu
 // @include      *www.youtube.com/*
 // @license      GPL-3.0-or-later
