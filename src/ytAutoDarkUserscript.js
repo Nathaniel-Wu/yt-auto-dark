@@ -236,9 +236,19 @@
         }
     };
 
+    const inIframe = () => {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
+    }
+
     /**
      * Execute
      */
+    if (inIframe())
+        return;
     if (window.matchMedia) {// if the browser/os supports system-level color scheme
         setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => setDarkMode(e.matches));
