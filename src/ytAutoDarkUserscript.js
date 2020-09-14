@@ -29,6 +29,9 @@
 
 (function () {
     'use strict';
+    /**
+     * Is dark theme enabled ?
+     */
     const isDarkThemeEnabled = () => {
         return Boolean(document.querySelector('html').hasAttribute('dark'));
     };
@@ -87,11 +90,11 @@
     };
 
     /**
-     * Check toggle button.
+     * Check theme menu.
      */
-    const isSwitchAvailableInDom = () => {
+    const isThemeMenuAvailableInDom = () => {
         return Boolean(
-            document.querySelector('paper-toggle-button.ytd-toggle-item-renderer'),
+            document.querySelector('ytd-multi-page-menu-renderer > #submenu #container #sections #items > ytd-compact-link-renderer')
         );
     };
 
@@ -99,10 +102,10 @@
      * Toggle dark theme by clicking element in DOM.
      */
     const toggleDarkTheme = () => {
-        if (isCompactLinkAvailableInDom() && isSwitchAvailableInDom()) {
+        if (isCompactLinkAvailableInDom() && isThemeMenuAvailableInDom()) {
             document.querySelector('ytd-toggle-theme-compact-link-renderer').click();
             document
-                .querySelector('paper-toggle-button.ytd-toggle-item-renderer')
+                .querySelector(`ytd-multi-page-menu-renderer > #submenu #container #sections #items > ytd-compact-link-renderer:nth-of-type(${isDarkThemeEnabled() ? 4 : 3})`)
                 .click();
         } else {
             setTimeout(() => {
@@ -212,7 +215,7 @@
             } else if (!isCompactLinkAvailableInDom()) {
                 openCloseMenu();
                 window.requestAnimationFrame(tryTogglingDarkMode);
-            } else if (!isSwitchAvailableInDom()) {
+            } else if (!isThemeMenuAvailableInDom()) {
                 openCloseRenderer();
                 window.requestAnimationFrame(tryTogglingDarkMode);
             } else {
