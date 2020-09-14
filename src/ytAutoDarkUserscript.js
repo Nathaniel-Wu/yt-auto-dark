@@ -19,7 +19,7 @@
 // ==UserScript==
 // @name         YouTube Auto Dark Mode
 // @namespace    http://tampermonkey.net/
-// @version      3.0.1
+// @version      3.0.2
 // @description  Automatically toggle built-in dark mode on youtube.com
 // @author       Victor VOISIN, Nathaniel Wu
 // @include      *www.youtube.com/*
