@@ -19,7 +19,7 @@
 // ==UserScript==
 // @name         YouTube Auto Dark Mode
 // @namespace    http://tampermonkey.net/
-// @version      3.0.2
+// @version      3.0.3
 // @description  Automatically toggle built-in dark mode on youtube.com
 // @author       Victor VOISIN, Nathaniel Wu
 // @include      *www.youtube.com/*
@@ -92,21 +92,43 @@
     /**
      * Check theme menu.
      */
+    const ThemeMenuType = {
+        "none": 0,
+        "toggle": 1,
+        "menu": 2
+    }
     const isThemeMenuAvailableInDom = () => {
-        return Boolean(
-            document.querySelector('ytd-multi-page-menu-renderer > #submenu #container #sections #items > ytd-compact-link-renderer')
-        );
+        let ret = ThemeMenuType.none;
+        if (Boolean(document.querySelector('#caption-container > paper-toggle-button')))
+            ret = ThemeMenuType.toggle;
+        else if (Boolean(document.querySelector('ytd-multi-page-menu-renderer > #submenu #container #sections #items > ytd-compact-link-renderer')))
+            ret = ThemeMenuType.menu;
+        return ret;
     };
 
     /**
      * Toggle dark theme by clicking element in DOM.
      */
     const toggleDarkTheme = () => {
-        if (isCompactLinkAvailableInDom() && isThemeMenuAvailableInDom()) {
-            document.querySelector('ytd-toggle-theme-compact-link-renderer').click();
-            document
-                .querySelector(`ytd-multi-page-menu-renderer > #submenu #container #sections #items > ytd-compact-link-renderer:nth-of-type(${isDarkThemeEnabled() ? 4 : 3})`)
-                .click();
+        let themeMenuType;
+        if (isCompactLinkAvailableInDom() && (themeMenuType = isThemeMenuAvailableInDom())) {
+            switch (themeMenuType) {
+                case ThemeMenuType.toggle: {
+                    document
+                        .querySelector('#caption-container > paper-toggle-button')
+                        .click();
+                    break;
+                }
+                case ThemeMenuType.menu: {
+                    document
+                        .querySelector(`ytd-multi-page-menu-renderer > #submenu #container #sections #items > ytd-compact-link-renderer:nth-of-type(${isDarkThemeEnabled() ? 4 : 3})`)
+                        .click();
+                    break;
+                }
+                default: {
+                    console.log('Unknown theme menu type');
+                }
+            }
         } else {
             setTimeout(() => {
                 window.requestAnimationFrame(tryTogglingDarkMode);
